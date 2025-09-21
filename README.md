@@ -1,11 +1,15 @@
----
-title: My Streamlit App
+title: HF Play
 emoji: 🚀
-colorFrom: indigo
-colorTo: blue
+colorFrom: red
+colorTo: yellow
 sdk: streamlit
-app_file: app.py
-pinned: false
+short_description: Streamlit template space
+license: apache-2.0
 ---
 
-Short description of your app.
+# Welcome to Streamlit!
+
+Edit `/src/streamlit_app.py` to customize this app to your heart's desire. :heart:
+
+If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
+forums](https://discuss.streamlit.io).
