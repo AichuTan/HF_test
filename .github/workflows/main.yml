@@ -1,4 +1,5 @@
-name: Sync to Hugging Face Space
+name: Sync to Hugging Face Space (mirror)
+
 on:
   push:
     branches: [main]
@@ -13,15 +14,22 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - name: Set up Git
+      - name: Git setup
         run: |
           git lfs install
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Push to Space
+      - name: Push to Space (force mirror)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SPACE_URL: https://huggingface.co/spaces/aycu2004/HF_play
+          SPACE_BRANCH: main
         run: |
+          # refresh remote refs to avoid "stale info"
+          git remote remove hub 2>/dev/null || true
           git remote add hub "https://__token__:${HF_TOKEN}@huggingface.co/spaces/aycu2004/HF_play"
-          git push --force-with-lease hub HEAD:main
+          git fetch hub $SPACE_BRANCH || true
+          # push current commit to Space branch, overwriting Space
+          git push --force-with-lease hub HEAD:$SPACE_BRANCH
+
